@@ -1,12 +1,14 @@
 package klotski
 
 import (
+	"fmt"
 	"strings"
 )
 
 type Board struct {
-	Size   Vec2[int]
-	Pieces []Piece
+	Size    Vec2[int]
+	Pieces  []Piece
+	HasPins bool
 }
 
 type Piece struct {
@@ -16,6 +18,10 @@ type Piece struct {
 
 type Vec2[T any] struct {
 	X, Y T
+}
+
+func (v Vec2[any]) String() string {
+	return fmt.Sprintf("(%v, %v)", v.X, v.Y)
 }
 
 func (b Board) String() string {

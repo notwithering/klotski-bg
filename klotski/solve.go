@@ -29,7 +29,7 @@ func Solve(start Board) (Graph, error) {
 			k := neighbor.key()
 			id, known := index[k]
 			if !known {
-				if len(g.Nodes) >= 3000 {
+				if len(g.Nodes) >= 5000 {
 					continue
 				}
 
@@ -96,13 +96,23 @@ func (b Board) key() string {
 func (b Board) neighbors() []Board {
 	var out []Board
 
-	for i := range b.Pieces {
+	for i, piece := range b.Pieces {
 		for _, direction := range []Vec2[int]{{X: 1}, {X: -1}, {Y: 1}, {Y: -1}} {
+			if b.HasPins {
+				if piece.Size.X > 1 && direction.Y != 0 {
+					continue
+				}
+
+				if piece.Size.Y > 1 && direction.X != 0 {
+					continue
+				}
+			}
+
 			neighbor := b.Clone()
 
 			neighbor.Pieces[i].Pos = Vec2[int]{
-				X: neighbor.Pieces[i].Pos.X + direction.X,
-				Y: neighbor.Pieces[i].Pos.Y + direction.Y,
+				X: piece.Pos.X + direction.X,
+				Y: piece.Pos.Y + direction.Y,
 			}
 
 			if neighbor.grid() != nil {
@@ -119,7 +129,8 @@ func (b Board) Clone() Board {
 	copy(pieces, b.Pieces)
 
 	return Board{
-		Size:   b.Size,
-		Pieces: pieces,
+		Size:    b.Size,
+		Pieces:  pieces,
+		HasPins: b.HasPins,
 	}
 }
