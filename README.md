@@ -2,7 +2,7 @@
 
 klotski-bg is a go program that generates interesting looking desktop backgrounds/wallpapers of a graph of every possible game state of the klotski puzzle game.
 
-inspired by [2swap's video "I Solved Klotski"](https://www.youtube.com/watch?v=YGLNyHd2w10&t=617s)
+inspired by [2swap's video "I Solved Klotski"](https://www.youtube.com/watch?v=YGLNyHd2w10)
 
 i left a graph.gob of the original Huarong Dao version of the game in `gobs/`
 
